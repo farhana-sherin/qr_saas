@@ -1,107 +1,155 @@
-# QR-SaaS Project
+🚀 QR-SaaS Project
 
-This repository contains the backend and frontend for the QR-SaaS application.
+A full-stack SaaS platform for generating and managing QR codes.
 
-## 🛠️ Environment Setup (Backend)
+This repository contains:
 
-Follow these steps to prepare a Python development environment and run the Django backend.
+🧠 Django Backend (API)
 
-### 1. Clone the repository
+🎨 Frontend (React / Next / etc.)
 
-```bash
+📁 Project Structure
+qr-saas/
+│
+├── backend/
+│   ├── manage.py
+│   ├── requirements.txt
+│   ├── apps/
+│   │   ├── accounts/
+│   │   ├── common/
+│   │   └── qr_codes/
+│   └── config/
+│       └── settings/
+│           ├── base.py
+│           ├── dev.py
+│           └── prod.py
+│
+└── frontend/
+🛠 Backend Setup Guide (For New Developers)
+1️⃣ Clone Repository
 git clone https://github.com/your-org/qr-saas.git
 cd qr-saas/backend
-```
-
-### 2. Create a Python virtual environment
-
-This project assumes Python 3.11+ (adjust version if needed).
-
-```bash
-# Windows (PowerShell)
+2️⃣ Create Virtual Environment
+Windows (PowerShell)
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-
-# macOS/Linux
+macOS / Linux
 python3 -m venv .venv
 source .venv/bin/activate
-```
 
-> ⚠️ Always activate the virtual environment before installing packages or running Django commands.
+⚠ Always activate the virtual environment before running Django.
 
-### 3. Install Python dependencies
-
-```bash
+3️⃣ Install Dependencies
 pip install --upgrade pip
 pip install -r requirements.txt
-```
+4️⃣ Create .env File
 
-Dependencies include Django and any other libraries used in the `backend/apps`.
+Inside backend/ create a file named:
 
-### 4. Configure settings
+.env
 
-The settings are split into `base.py`, `dev.py`, and `prod.py` under `backend/config/settings/`.
+Example development configuration:
 
-- `dev.py` is used for local development and loads environment variables from `.env`.
-- Create a `.env` file in `backend/` with keys such as:
-  ```ini
-  SECRET_KEY=your-secret-key
-  DEBUG=True
-  ALLOWED_HOSTS=localhost,127.0.0.1
-  DATABASE_URL=sqlite:///db.sqlite3
-  ```
+SECRET_KEY=your-secret-key
+DEBUG=True
+DJANGO_SETTINGS_MODULE=config.settings.dev
 
-> 💡 For production, set `DJANGO_SETTINGS_MODULE=config.settings.prod` and provide secure values.
-
-### 5. Initialize the database
-
-```bash
+DB_ENGINE=django.db.backends.sqlite3
+DB_NAME=db.sqlite3
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+5️⃣ Run Migrations
+python manage.py makemigrations
 python manage.py migrate
-```
-
-If using SQLite (default) the file `db.sqlite3` will be created under `backend/config`.
-
-### 6. Create a superuser (optional)
-
-```bash
+6️⃣ Create Superuser
 python manage.py createsuperuser
-```
-
-### 7. Run the development server
-
-```bash
+7️⃣ Run Development Server
 python manage.py runserver
-```
-Visit `http://127.0.0.1:8000` in your browser.
 
-## 🏗️ Workspace Structure
+Backend runs at:
 
-```
-backend/
-  manage.py
-  requirements.txt
-  apps/
-    accounts/
-    common/
-    qr_codes/
-  config/
-    settings/
-      base.py
-      dev.py
-      prod.py
-frontend/
-  ...
-```
+http://127.0.0.1:8000
+🌿 Git Workflow (Team Collaboration Guide)
 
-## ⚙️ Frontend
+We follow a dev branch workflow.
 
-Instructions for setting up the frontend should go here (e.g. Node.js version, install dependencies, run local dev server). Adapt according to actual setup.
+🔹 First Time Setup
 
-## 🚀 Additional Notes
+After cloning:
 
-- When checking out a new branch or pulling updates, re-run `pip install -r requirements.txt` if dependencies change.
-- Run tests with: `python manage.py test` from `backend/`.
+git checkout dev
+git pull origin dev
+🌱 Creating a New Feature Branch
 
----
+Always create a branch from dev.
 
-Happy hacking! 🎉
+git checkout dev
+git pull origin dev
+git checkout -b feature/feature-name
+
+Example:
+
+git checkout -b feature/jwt-authentication
+💾 Commit Changes
+git add .
+git commit -m "Added JWT authentication"
+⬆ Push Branch
+git push origin feature/feature-name
+
+Then create a Pull Request → Merge into dev.
+
+🔄 Updating Your Branch with Latest Dev
+
+If dev was updated:
+
+git checkout dev
+git pull origin dev
+
+git checkout feature/your-branch
+git merge dev
+
+Resolve conflicts if any.
+
+🔁 Pull Latest Changes
+
+Before starting work daily:
+
+git checkout dev
+git pull origin dev
+🔀 Merge dev into main (Production)
+
+Only after testing:
+
+git checkout main
+git pull origin main
+git merge dev
+git push origin main
+🏭 Production Setup
+
+On production server:
+
+export DJANGO_SETTINGS_MODULE=config.settings.prod
+
+Production .env example:
+
+SECRET_KEY=secure-production-key
+DEBUG=False
+DJANGO_SETTINGS_MODULE=config.settings.prod
+
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=qr_saas
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_HOST=localhost
+DB_PORT=5432
+🧪 Run Tests
+python manage.py test
+📦 Installing New Packages
+
+After installing new packages:
+
+pip freeze > requirements.txt
+git add requirements.txt
+git commit -m "Updated requirements"
